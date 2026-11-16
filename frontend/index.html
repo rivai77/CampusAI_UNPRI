@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusAI UNPRI - Asisten Informasi Kampus</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-icon">🎓</div>
+                <div>
+                    <h2>CampusAI</h2>
+                    <span>UNIVERSITAS PRIMA INDONESIA</span>
+                </div>
+            </div>
+
+            <button class="new-chat-btn" id="newChatBtn">
+                + Percakapan Baru
+            </button>
+
+            <div class="sidebar-section">
+                <p class="sidebar-label">MENU</p>
+                <div class="menu-item active">💬 Chat AI</div>
+                <div class="menu-item">📚 Informasi Kampus</div>
+            </div>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                <span id="connectionStatus">Menghubungkan...</span>
+            </div>
+        </aside>
+
+        <!-- Area Chat -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <button class="mobile-menu" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h3>Asisten Informasi Kampus</h3>
+                    <p>Universitas Prima Indonesia - Medan</p>
+                </div>
+                <div class="online-badge">
+                    <span class="status-dot"></span> Online
+                </div>
+            </header>
+
+            <section class="chat-area" id="chatArea">
+
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">🎓</div>
+                    <h1>Halo, Mahasiswa UNPRI!</h1>
+                    <p>
+                        Selamat datang di CampusAI. Ada yang bisa saya
+                        bantu terkait informasi kampus hari ini?
+                    </p>
+
+                    <div class="suggestion-list">
+                        <button class="suggestion"
+                            data-question="Bagaimana cara mengurus surat aktif kuliah?">
+                            📄 Cara mengurus surat aktif kuliah
+                        </button>
+
+                        <button class="suggestion"
+                            data-question="Apa itu Kartu Rencana Studi (KRS)?">
+                            📚 Informasi KRS
+                        </button>
+
+                        <button class="suggestion"
+                            data-question="Bagaimana cara mengetahui informasi akademik?">
+                            🎓 Informasi akademik
+                        </button>
+                    </div>
+                </div>
+
+                <div class="messages" id="messages"></div>
+
+            </section>
+
+            <footer class="chat-footer">
+                <form id="chatForm" class="chat-form">
+                    <textarea
+                        id="questionInput"
+                        placeholder="Tulis pertanyaan tentang informasi kampus..."
+                        rows="1"
+                        maxlength="2000"
+                        required
+                    ></textarea>
+
+                    <button type="submit" id="sendBtn" title="Kirim pesan">
+                        ➤
+                    </button>
+                </form>
+
+                <p class="footer-note">
+                    CampusAI UNPRI dapat memberikan jawaban berdasarkan
+                    informasi yang tersedia dalam database kampus.
+                </p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment dan rahasia
+.env
+.env.*
+!.env.example
+
+# Database backup
+backup/
+*.sql
+
+# File sistem
+.DS_Store
+Thumbs.db

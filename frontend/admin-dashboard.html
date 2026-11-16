@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CampusAI UNPRI</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <div class="brand">🎓 CampusAI</div>
+        <div class="brand-subtitle">UNIVERSITAS PRIMA INDONESIA</div>
+
+        <div class="sidebar-label">MENU UTAMA</div>
+
+        <button class="nav-button active" id="dashboardMenu">
+            📊 Dashboard
+        </button>
+
+        <button class="nav-button" id="informationMenu">
+            📚 Informasi Kampus
+        </button>
+
+        <button class="nav-button" id="categoryMenu">
+            📁 Kategori
+        </button>
+
+        <div class="sidebar-bottom">
+            <div class="admin-info" id="adminInfo">
+                Memuat data admin...
+            </div>
+
+            <button class="logout-button" id="logoutBtn">
+                Keluar
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Kelola informasi akademik Universitas Prima Indonesia</p>
+            </div>
+
+            <div class="online-status">● Sistem Aktif</div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <p>Total Informasi Kampus</p>
+                <h2 id="totalInformation">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Total Kategori</p>
+                <h2 id="totalCategories">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Informasi Aktif</p>
+                <h2 id="activeInformation">0</h2>
+            </div>
+        </section>
+
+        <section class="panel" id="informationPanel">
+            <div class="panel-header">
+                <h2>Data Informasi Kampus</h2>
+
+                <button class="primary-button" id="addInformationBtn">
+                    + Tambah Informasi
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Judul</th>
+                            <th>Kategori</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="informationTable">
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                Memuat data...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel" id="categoryPanel">
+            <div class="panel-header">
+                <h2>Data Kategori</h2>
+
+                <button class="primary-button" id="addCategoryBtn">
+                    + Tambah Kategori
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Kategori</th>
+                            <th>Deskripsi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="categoryTable">
+                        <tr>
+                            <td colspan="3" class="empty-state">
+                                Memuat kategori...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Form tambah dan edit informasi -->
+<div class="modal" id="informationModal">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2 id="informationModalTitle">Tambah Informasi</h2>
+            <button class="close-button" id="closeInformationModal">×</button>
+        </div>
+
+        <form id="informationForm">
+
+            <input type="hidden" id="informationId">
+
+            <div class="form-group">
+                <label for="informationTitle">Judul Informasi</label>
+                <input type="text" id="informationTitle" required maxlength="200">
+            </div>
+
+            <div class="form-group">
+                <label for="informationCategory">Kategori</label>
+                <select id="informationCategory" required>
+                    <option value="">Pilih kategori</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="informationContent">Isi Informasi</label>
+                <textarea id="informationContent" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="informationSource">Sumber Informasi</label>
+                <input type="text" id="informationSource">
+            </div>
+
+            <div class="form-group">
+                <label for="informationDate">Tanggal Berlaku</label>
+                <input type="date" id="informationDate">
+            </div>
+
+            <div class="form-group">
+                <label for="informationStatus">Status</label>
+                <select id="informationStatus">
+                    <option value="aktif">Aktif</option>
+                    <option value="nonaktif">Nonaktif</option>
+                </select>
+            </div>
+
+            <p class="form-message" id="informationMessage"></p>
+
+            <button type="submit" class="primary-button" id="saveInformationBtn">
+                Simpan Informasi
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<!-- Form tambah kategori -->
+<div class="modal" id="categoryModal">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Tambah Kategori</h2>
+            <button class="close-button" id="closeCategoryModal">×</button>
+        </div>
+
+        <form id="categoryForm">
+
+            <div class="form-group">
+                <label for="categoryName">Nama Kategori</label>
+                <input type="text" id="categoryName" required maxlength="100">
+            </div>
+
+            <div class="form-group">
+                <label for="categoryDescription">Deskripsi</label>
+                <textarea id="categoryDescription"></textarea>
+            </div>
+
+            <p class="form-message" id="categoryMessage"></p>
+
+            <button type="submit" class="primary-button" id="saveCategoryBtn">
+                Simpan Kategori
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<script src="js/admin-dashboard.js"></script>
+</body>
+</html>

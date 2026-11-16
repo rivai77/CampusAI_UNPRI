@@ -1,0 +1,121 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #172b4d, #244b91);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 430px;
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.brand-icon {
+    font-size: 42px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+h1 {
+    text-align: center;
+    color: #172b4d;
+    font-size: 25px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-top: 7px;
+}
+
+h2 {
+    margin-top: 35px;
+    color: #172b4d;
+}
+
+.description {
+    color: #64748b;
+    margin: 10px 0 25px;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin: 17px 0 8px;
+    font-weight: 600;
+    color: #334155;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: #244b91;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #244b91;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #172b4d;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    color: #244b91;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 30px;
+}
