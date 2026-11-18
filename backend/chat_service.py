@@ -18,6 +18,7 @@ STOPWORDS = {
 
 
 # Kumpulan istilah yang memiliki maksud atau topik serupa
+
 CONCEPTS = {
     "krs": [
         "krs",
@@ -31,6 +32,23 @@ CONCEPTS = {
         "rencana studi",
         "registrasi mata kuliah",
         "pengambilan mata kuliah"
+    ],
+
+    "siam": [
+        "siam",
+        "siam unpri",
+        "sistem informasi akademik",
+        "sistem informasi akademik mahasiswa",
+        "layanan sistem akademik"
+    ],
+
+    "jadwal kuliah": [
+        "jadwal kuliah",
+        "jadwal perkuliahan",
+        "melihat jadwal",
+        "cek jadwal",
+        "jadwal mata kuliah",
+        "jadwal kelas"
     ],
 
     "surat aktif kuliah": [
@@ -57,8 +75,18 @@ CONCEPTS = {
         "khs",
         "kartu hasil studi",
         "hasil studi",
-        "nilai semester",
         "transkrip nilai semester"
+    ],
+
+    "nilai akademik": [
+        "nilai akademik",
+        "melihat nilai",
+        "cek nilai",
+        "cek nilai akademik",
+        "nilai semester",
+        "nilai kuliah",
+        "nilai mahasiswa",
+        "hasil nilai"
     ],
 
     "cuti kuliah": [
@@ -69,6 +97,7 @@ CONCEPTS = {
         "cuti akademik"
     ]
 }
+
 
 
 def normalize_text(text):
@@ -242,6 +271,8 @@ def save_chat(session_id: str, question: str, answer: str):
             connection.close()
 
 
+
+
 # Memproses pertanyaan mahasiswa
 def process_chat(question: str, session_id: str = None):
     question = question.strip()
@@ -275,35 +306,9 @@ def process_chat(question: str, session_id: str = None):
             "sources": []
         }
 
-    # Menyusun konteks dari hasil pencarian database
-    context_parts = []
-
-    for item in information:
-        context_parts.append(
-            f"""
-Judul: {item["judul"]}
-Kategori: {item["nama_kategori"]}
-Isi informasi: {item["isi"]}
-Sumber: {item["sumber"]}
-Tanggal berlaku: {item["tanggal_berlaku"]}
-"""
-        )
-
-    context = "\n".join(context_parts)
-
-    # Menyiapkan jawaban database sebagai fallback
-    database_answer = information[0]["isi"]
-
-    # Mengirim pertanyaan dan konteks ke Ollama
-    
     # Menggunakan informasi database sebagai jawaban utama
-    # agar AI tidak menambahkan informasi yang belum terverifikasi.
-    answer = database_answer
-    answer_mode = "database_fallback"
-
-
-    # Menyimpan percakapan
-    save_chat(session_id, question, answer)
+    answer = information[0]["isi"]
+    answer_mode = "database"
 
     # Menyiapkan sumber informasi
     sources = [
@@ -314,6 +319,9 @@ Tanggal berlaku: {item["tanggal_berlaku"]}
         }
         for item in information
     ]
+
+    # Menyimpan percakapan ke database
+    save_chat(session_id, question, answer)
 
     return {
         "success": True,

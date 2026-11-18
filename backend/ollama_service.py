@@ -10,21 +10,25 @@ def generate_answer(question: str, context: str) -> str:
 
     prompt = f"""Kamu adalah CampusAI, asisten informasi Universitas Prima Indonesia (UNPRI).
 
-Gunakan informasi berikut untuk menjawab pertanyaan mahasiswa.
+TUGAS:
+Jawab pertanyaan mahasiswa hanya berdasarkan INFORMASI DATABASE.
 
-INFORMASI:
+INFORMASI DATABASE:
 {context}
 
-PERTANYAAN:
+PERTANYAAN MAHASISWA:
 {question}
 
-PETUNJUK:
-- Jawab dalam bahasa Indonesia.
-- Gunakan hanya fakta yang tertulis pada INFORMASI.
-- Jangan menambahkan langkah, biaya, jadwal, atau persyaratan baru.
-- Jika informasi hanya menjelaskan sebagian, jawab sebatas informasi tersebut.
-- Jangan mengatakan informasi tidak tersedia jika jawabannya ada pada INFORMASI.
-- Jawab secara langsung dan maksimal 2 kalimat.
+ATURAN WAJIB:
+1. Gunakan hanya fakta yang tertulis dalam INFORMASI DATABASE.
+2. Dilarang membuat langkah-langkah prosedur sendiri.
+3. Dilarang menambahkan alamat website, nama menu, tombol, biaya, jadwal, atau persyaratan yang tidak tertulis dalam database.
+4. Jangan menganggap fitur SIAM pasti memiliki menu tertentu jika tidak disebutkan dalam database.
+5. Jika informasi hanya menjelaskan sebagian, sampaikan hanya bagian yang diketahui.
+6. Jika mahasiswa meminta prosedur rinci tetapi database hanya memberikan informasi umum, jelaskan bahwa prosedur rinci belum tersedia.
+7. Jangan mengarang informasi untuk membuat jawaban terlihat lengkap.
+8. Jawab dalam bahasa Indonesia yang sopan, singkat, dan mudah dipahami.
+9. Maksimal 3 kalimat.
 
 JAWABAN:"""
 
@@ -36,9 +40,10 @@ JAWABAN:"""
                 "prompt": prompt,
                 "stream": False,
                 "options": {
-                    "temperature": 0.1,
-                    "num_predict": 120,
-                    "top_p": 0.8
+                    "temperature": 0,
+    "num_predict": 80,
+    "top_p": 0.5,
+    "repeat_penalty": 1.1
                 }
             },
             timeout=120

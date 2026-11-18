@@ -133,36 +133,38 @@ async function loadInformation() {
         return;
     }
 
-    informationData.forEach((item, index) => {
-        const status = item.status || "nonaktif";
+    
+informationData.forEach((item, index) => {
+    const status = item.status || "nonaktif";
 
-        informationTable.innerHTML += `
-            <tr>
-                <td>${index + 1}</td>
-                <td>${escapeHTML(item.judul)}</td>
-                <td>${escapeHTML(item.nama_kategori)}</td>
-                <td>
-                    <span class="status ${status}">
-                        ${escapeHTML(status)}
-                    </span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button
-                            class="secondary-button"
-                            onclick="editInformation(${Number(item.id)})">
-                            Edit
-                        </button>
+    informationTable.innerHTML += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${escapeHTML(item.judul)}</td>
+            <td>${escapeHTML(item.nama_kategori)}</td>
+            <td>
+                <span class="status ${status}">
+                    ${escapeHTML(status)}
+                </span>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <button
+                        class="secondary-button"
+                        onclick="editInformation(${Number(item.id)})">
+                        Edit
+                    </button>
 
-                        <button
-                            class="danger-button"
-                            onclick="deleteInformation(${Number(item.id)})">
-                            Hapus
-                        </button>
-                    </div>
-                </td>
-            </tr>`;
-    });
+                    <button
+                        class="${status === "aktif" ? "danger-button" : "primary-button"}"
+                        onclick="toggleInformationStatus(${Number(item.id)})">
+                        ${status === "aktif" ? "Nonaktifkan" : "Aktifkan"}
+                    </button>
+                </div>
+            </td>
+        </tr>`;
+});
+
 }
 
 // Memuat seluruh data dashboard
@@ -267,20 +269,53 @@ document.getElementById("informationForm").addEventListener("submit", async func
 });
 
 // Menghapus informasi kampus
-window.deleteInformation = async function(id) {
+// Mengaktifkan atau menonaktifkan informasi tanpa menghapus data
+window.toggleInformationStatus = async function(id) {
+    const item = informationData.find(
+        data => Number(data.id) === Number(id)
+    );
+
+    if (!item) {
+        alert("Data informasi tidak ditemukan.");
+        return;
+    }
+
+    const newStatus = item.status === "aktif" ? "nonaktif" : "aktif";
+
+    const action = newStatus === "aktif"
+        ? "mengaktifkan"
+        : "menonaktifkan";
+
     const confirmed = confirm(
-        "Apakah kamu yakin ingin menghapus informasi ini?"
+        `Apakah kamu yakin ingin ${action} informasi "${item.judul}"?`
     );
 
     if (!confirmed) return;
 
+    // Mempertahankan data lama dan hanya mengubah status
+    const payload = {
+        kategori_id: Number(item.kategori_id),
+        judul: item.judul,
+        isi: item.isi,
+        sumber: item.sumber || null,
+        tanggal_berlaku: item.tanggal_berlaku
+            ? String(item.tanggal_berlaku).substring(0, 10)
+            : null,
+        status: newStatus
+    };
+
     try {
         const result = await apiRequest(`/api/informasi/${id}`, {
-            method: "DELETE",
-            auth: true
+            method: "PUT",
+            auth: true,
+            body: JSON.stringify(payload)
         });
 
-        alert(result.message || "Informasi berhasil dihapus.");
+        alert(
+            result.message ||
+            `Informasi berhasil ${action}.`
+        );
+
         await loadInformation();
 
     } catch (error) {
